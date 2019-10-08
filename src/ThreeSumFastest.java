@@ -1,8 +1,11 @@
+import javax.swing.*;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ThreeSumFastest {
 
@@ -37,8 +40,9 @@ public class ThreeSumFastest {
         }
 
         static void runFullExperiment(String resultsFileName){
+            List<Double> averageTimes = new ArrayList<Double>();
 
-
+            double doubling = 0;
             try {
                 resultsFile = new FileWriter(ResultsFolderPath + resultsFileName);
                 resultsWriter = new PrintWriter(resultsFile);
@@ -54,6 +58,8 @@ public class ThreeSumFastest {
             resultsWriter.flush();
             /* for each size of input we want to test: in this case starting small and doubling the size each time */
             for(int inputSize=MININPUTSIZE;inputSize<=MAXINPUTSIZE; inputSize*=2) {
+
+                int x = 0;
                 // progress message...
                 System.out.println("Running test for input size "+inputSize+" ... ");
 
@@ -94,7 +100,7 @@ public class ThreeSumFastest {
                 double averageTimePerTrialInBatch = (double) batchElapsedTime / (double)numberOfTrials; // calculate the average time per trial in this batch
 
                 /* print data for this size of input */
-                resultsWriter.printf("%12d  %15.2f \n",inputSize, averageTimePerTrialInBatch); // might as well make the columns look nice
+                resultsWriter.printf("%12d  %15.2f %15.2f\n",inputSize, averageTimePerTrialInBatch); // might as well make the columns look nice
                 resultsWriter.flush();
                 System.out.println(" ....done.");
             }
